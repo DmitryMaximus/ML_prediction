@@ -1,0 +1,266 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np \n",
+    "import pandas as pd\n",
+    "import openpyxl\n",
+    "from tkinter import *\n",
+    "from tkinter.filedialog import askopenfilename"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "C:/Users/u_m14GQ/Desktop/Projects/ОтчетНА/Файлы выгрузки/Пример Отчета по ЮЛ.xlsx\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Окно выбора файла таблицы\n",
+    "root = Tk()\n",
+    "root.withdraw()\n",
+    "root.update()\n",
+    "file_path = askopenfilename()\n",
+    "root.destroy()\n",
+    "\n",
+    "print(file_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 105,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "C:/Users/u_m14GQ/Desktop/Projects/ОтчетНА/Файлы выгрузки/Коды ошибок.xlsx\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Окно выбора файла c кодами ошибок\n",
+    "root = Tk()\n",
+    "root.withdraw()\n",
+    "root.update()\n",
+    "error_path = askopenfilename()\n",
+    "root.destroy()\n",
+    "\n",
+    "print(error_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 112,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def Error(file_path, error_path, list_index, posititon_list, errorcode):\n",
+    "    #Открытие листа отчета\n",
+    "    workbook = openpyxl.load_workbook(file_path)\n",
+    "    workbook.active\n",
+    "    sheet = workbook[workbook.sheetnames[list_index]]\n",
+    "    #Выделение ячеек с ошибками цветом\n",
+    "    for cell in position_list:\n",
+    "        cell.style = Style(fill=PatternFill(patternType='solid',\n",
+    "                                                fill_type='solid', \n",
+    "                                                fgColor=Color('C4C4C4')))\n",
+    "    #Вывод комментария в соответствующий столбец\n",
+    "    \n",
+    "    \n",
+    "    #workbook.save(file_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 123,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [],
+   "source": [
+    "#создание дополнительных столбцов\n",
+    "from openpyxl.styles import Color, PatternFill, Font, Border\n",
+    "path_to_file = r\"C:\\Users\\u_m14GQ\\Desktop\\Test\\insertTest.xlsx\"\n",
+    "wb_test = openpyxl.load_workbook(path_to_file)\n",
+    "wb_test.active\n",
+    "sht_test= wb_test[wb_test.sheetnames[0]]\n",
+    "sht_test.insert_cols(3)\n",
+    "sht_test.cell(1,3).value = 'Вставленная ячейка'\n",
+    "redFill = PatternFill(start_color='FFFF0000',\n",
+    "                   end_color='FFFF0000',\n",
+    "                   fill_type='solid')\n",
+    "sht_test.cell(1,3).fill = redFill\n",
+    "\n",
+    "wb_test.save(path_to_file)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def Statistics():\n",
+    "    pass"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "workbook = openpyxl.load_workbook(file_path)\n",
+    "workbook.active\n",
+    "sheet = workbook[workbook.sheetnames[0]]\n",
+    "sheet.cell(2,2).value='ABCBCB'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "ABCBCB\n"
+     ]
+    }
+   ],
+   "source": [
+    "table1 = pd.read_excel(file_path, sheet_name=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 111,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "None\n"
+     ]
+    }
+   ],
+   "source": [
+    "workbook = openpyxl.load_workbook(error_path)\n",
+    "workbook.active\n",
+    "sheet = workbook[workbook.sheetnames[0]]\n",
+    "print(sheet.cell(3,1).value)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['ПИН',\n",
+       " 'Номер счета ',\n",
+       " 'Бухрежим',\n",
+       " 'Дата открытия счета',\n",
+       " 'Тип клиента,',\n",
+       " 'Полное имя Клиента',\n",
+       " 'Полное наименование клиента (поле 3*35 симв.)',\n",
+       " 'Ошибки в поле Сокращенное наименование ',\n",
+       " 'Сокращенное наименование ',\n",
+       " 'Наименование на иностр.языке ',\n",
+       " 'Филиал по умолчанию (мнемоника)',\n",
+       " 'Ответственное подразделение (в расшифровке)',\n",
+       " 'Менеджер клиента',\n",
+       " 'Страна регистрации',\n",
+       " 'Страна происхождения ',\n",
+       " 'ОГРН',\n",
+       " 'Дата присвоения ОГРН',\n",
+       " 'Номер регистрации в РП',\n",
+       " 'Дата регистрации в РП',\n",
+       " 'ИНН/КИО',\n",
+       " 'Ошибки в полях Наименование рег.органа  и Место гос.регистрации ',\n",
+       " 'Наименование рег.органа ',\n",
+       " 'Место гос.регистрации ',\n",
+       " 'Дата начала отношений с клиентом',\n",
+       " 'ОКВЭД (цифровое обозначение)',\n",
+       " 'ОКФС',\n",
+       " 'Ликвидирован (код)',\n",
+       " 'Ликвидирован (расшифровка)',\n",
+       " 'Ошибки в поле Сотрудник, утвердивший открытие счета',\n",
+       " 'Сотрудник, утвердивший открытие счета',\n",
+       " 'Зарегистрированный Уставный капитал',\n",
+       " 'Оплаченный Уставный капитал',\n",
+       " 'Валюта УК',\n",
+       " 'Наличие лицензий',\n",
+       " 'Срок аккредитации',\n",
+       " 'Дата актуализации',\n",
+       " 'FATCA-статус',\n",
+       " 'GIIN',\n",
+       " 'Ошибки в поле Налоговый резидент США(Y/N)',\n",
+       " 'Налоговый резидент США(Y/N)',\n",
+       " 'Американский ИНН/TIN',\n",
+       " 'Ошибки в полях с Уровнем риска',\n",
+       " 'Уровень риска',\n",
+       " 'Обоснование повышенного уровня риска (коды)',\n",
+       " 'Дата актуализации уровня риска',\n",
+       " 'Ошибки в поле Адрес юридический (J)',\n",
+       " 'Адрес юридический (J)',\n",
+       " 'J поле \"Обращение\"',\n",
+       " 'Ошибки в поле Адрес почтовый (тип адреса \"Z\")',\n",
+       " 'Адрес почтовый (тип адреса \"Z\")',\n",
+       " 'Z поле \"Обращение\"',\n",
+       " 'Ошибки в поле Адрес головной организации (тип адреса \"R\")',\n",
+       " 'Адрес головной организации (тип адреса \"R\")',\n",
+       " 'Адрес фактический (тип адреса \"B\") ']"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "list(table1) #Список столбцов"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
