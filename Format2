@@ -1,0 +1,208 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np \n",
+    "import pandas as pd\n",
+    "import openpyxl\n",
+    "from tkinter import *\n",
+    "from tkinter.filedialog import askopenfilename\n",
+    "from openpyxl.styles import Color, PatternFill, Font, Border"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "C:/Users/u_m14GQ/Desktop/Test/insertTest — копия.xlsx\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Окно выбора файла таблицы\n",
+    "root = Tk()\n",
+    "root.withdraw()\n",
+    "root.update()\n",
+    "file_path = askopenfilename()\n",
+    "root.destroy()\n",
+    "\n",
+    "print(file_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "C:/Users/u_m14GQ/Desktop/Test/insertTest — копия.xlsx\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Окно выбора файла таблицы\n",
+    "root = Tk()\n",
+    "root.withdraw()\n",
+    "root.update()\n",
+    "error_path = askopenfilename()\n",
+    "root.destroy()\n",
+    "\n",
+    "print(file_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Создание словарей (код ошибки, колонка); (код ошибки, коммент)\n",
+    "error_code_df = pd.read_excel(io=error_path, sheet_name=\"Требования\")\n",
+    "error_code_df = error_code_df.fillna(999)\n",
+    "\n",
+    "error_col = error_code_df[\"Привязка к столбцу\"].values.tolist()\n",
+    "error_code_col = error_code_df[\"Код ошибки\"].values.tolist()  \n",
+    "error_comment = error_code_df[\"Комментарий выводимый в столбце с ошибками\"].values.tolist()\n",
+    "\n",
+    "dict_code_col = dict(zip(error_code_col, error_col))\n",
+    "dict_code_comment = dict(zip(error_code_col, error_comment))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "error_col_unique = list(set(error_col))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "current_cols_df = pd.read_excel(file_path,sheet_name=0)\n",
+    "cols = list(map(str.strip, list(current_cols_df)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "index_list=[]\n",
+    "for item in error_col_unique:\n",
+    "    if item in cols:\n",
+    "        if item not in index_list:\n",
+    "            index_list.append(cols.index(item)+2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def InsertCols(code_list, )"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dict_code_col['Код 31']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Добавление столбцов в соответствии с кодами ошибок\n",
+    "\n",
+    "wb_test = openpyxl.load_workbook(file_path)\n",
+    "wb_test.active\n",
+    "sht_test= wb_test[wb_test.sheetnames[0]]\n",
+    "iterator=0\n",
+    "for item in index_list:\n",
+    "    sht_test.insert_cols(item+iterator)\n",
+    "    sht_test.cell(*[1,item+iterator]).value = cols[item-2]\n",
+    "    iterator+=1\n",
+    "wb_test.save(file_path)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def Error(list_index,position_list, error_code): #необходимо запускать только после создания словарей\n",
+    "    #Открытие листа отчета\n",
+    "    workbook = openpyxl.load_workbook(file_path)\n",
+    "    workbook.active\n",
+    "    sheet = workbook[workbook.sheetnames[list_index]]\n",
+    "    #Выделение ячеек с ошибками цветом\n",
+    "    for items in position_list:\n",
+    "        sheet.cell(*items).fill = PatternFill(start_color=\"00FFCC00\",\n",
+    "                                               end_color=\"00FFCC00\", fill_type='solid')\n",
+    "        \n",
+    "    #Вывод комментария в соответствующий столбец\n",
+    "    \n",
+    "    \n",
+    "    \n",
+    "    \n",
+    "    workbook.save(file_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def Statistics():\n",
+    "    pass"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
